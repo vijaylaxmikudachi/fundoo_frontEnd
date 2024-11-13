@@ -1,36 +1,72 @@
 import React from "react";
 import "./style.css";
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+
 
 const Registration = () => {
   return (
+ 
     <div className = "container">
       <div className = "form-section">
         <h2>Fundo</h2>
         <p>Create your Fundo Account</p>
         <form>
+        <Box
+            component="form"
+            sx={{ '& .MuiTextField-root': { m: 1, width: '38ch' } }}
+            noValidate
+            autoComplete="off"
+          >
           <div className="form-group">
-            <label htmlFor="firstName">First Name*</label>
-            <input type="text" id="firstName" required />
+          <TextField
+          required
+          id="outlined-required"
+          label="Required"
+          defaultValue="First Name"
+        />
           </div>
           <div className="form-group">
-            <label htmlFor="lastname">Last Name*</label>
-            <input type="text" id="lastName" required />
+          <TextField
+          required
+          id="outlined-required"
+          label="Required"
+          defaultValue="Last Name"
+        />
           </div>
           <div className="form-group">
-            <label htmlFor="username">Username*</label>
-            <input type="text" id="username" required />
-            <span className="password-hint">
+          <TextField
+          required
+          id="outlined-required"
+          label="Required"
+          defaultValue="Username"
+          />
+          <div>
+          <span className="password-hint">
               You can use letters,numbers & periods
-            </span>
-            </div>
+          </span>
+          </div>
+        
+          </div>
+          </Box>
             <div className="password-row">
               <div className="form-group">
-                <label htmlFor="password">Password*</label>
-                <input type="password" id="password" required />
+              <TextField
+                  id="filled-password-input"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  variant="filled"
+                />
               </div>
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm*</label>
-              <input type="password" id="confirmPassword" required />
+            <TextField
+              id="filled-password-input"
+              label="Confirm"
+              type="password"
+              autoComplete="current-password"
+              variant="filled"
+            />
             </div>
             </div>
             <span className="password-hint">
@@ -44,6 +80,7 @@ const Registration = () => {
                 Register
               </button>
             </div>
+            
         </form>
       </div>
       <div className="image-section">
