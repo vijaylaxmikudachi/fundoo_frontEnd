@@ -2,7 +2,8 @@ import React from "react";
 import "./style.css";
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 const Registration = () => {
   return (
@@ -76,9 +77,9 @@ const Registration = () => {
               <a href="#" className="sign-in-link">
                 sign in instead
               </a>
-              <button type="submit" className="register-btn">
-                Register
-              </button>
+              <Stack direction="row" spacing={2}>
+              <Button variant="contained">Register</Button>
+              </Stack>
             </div>
             
         </form>
