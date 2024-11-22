@@ -1,0 +1,98 @@
+.notes-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    .note-card {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 10px 0;
+      position: relative;
+      width: 320px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      outline: none;
+      background-color: #fff;
+      transition: box-shadow 0.4s, border 0.3s, min-height 0.3s;
+  
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+  
+      &.focused {
+        border: 2px solid #1976d2;
+        min-height: 250px; /* Increase the height of the card when focused */
+      }
+  
+      .note-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+  
+        .note-title-input,
+        .note-description-input {
+          margin-bottom: 0;
+        }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        .check-icon-container {
+          margin-top: 8px; /* Add some space before the check icon */
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+  
+      .note-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+  
+      .note-description {
+        font-size: 14px;
+        color: #555;
+        word-wrap: break-word;
+      }
+  
+      .note-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+  
+        button {
+          margin: 0 5px;
+        }
+  
+        &.show {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+  
