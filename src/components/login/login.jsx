@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginApiCall } from "../../utils/Api";
+import { loginApiCall ,forgotPasswordCall } from "../../utils/Api";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
@@ -12,6 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
 const Login = () => {
   const [formState, setFormState] = useState({
@@ -20,11 +21,50 @@ const Login = () => {
     errors: { email: "", password: "" },
     loading: false,
   });
+  
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePassword = (password) => password.length >= 8;
+  const handleForgotPassword = async () => {
+    if (!validateEmail(forgotPasswordEmail)) {
+      toast.error("Please enter a valid email address.", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Bounce,
+      });
+      return;
+    }
 
+    try {
+      await forgotPasswordCall({ email: forgotPasswordEmail }, "user/forget-password");
+      toast.success("Reset link sent to your email.", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Bounce,
+      });
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error("Failed to send reset link. Please try again.", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Bounce,
+      });
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     let emailError = "";
@@ -51,8 +91,6 @@ const Login = () => {
       const data = await loginApiCall({ email: formState.email, password: formState.password }, `user/login`);
       console.log(data);
       localStorage.setItem("token", data.data.data.token);
-
-      // Show success toast
       toast.success("Login successful!", {
         position: "bottom-center",
         autoClose: 2000,
@@ -63,7 +101,6 @@ const Login = () => {
         transition: Bounce,
       });
       setTimeout(() => {
-        // Navigate to the dashboard
       navigate("/dashboard/notes");
     }, 2000);
      
@@ -128,7 +165,11 @@ const Login = () => {
             />
 
             <div className="link-row">
-              <a href="#" className="forgot-password">
+              <a
+                href="#"
+                className="forgot-password"
+                onClick={() => setIsModalOpen(true)}
+              >
                 Forgot password?
               </a>
               <Link to="/Registration" className="sign-in-link">
@@ -148,6 +189,44 @@ const Login = () => {
           </Box>
         </form>
       </div>
+      {/* Modal for Forgot Password */}
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+  <Box
+    sx={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 400,
+      bgcolor: "background.paper",
+      border: "2px solid #000",
+      boxShadow: 24,
+      p: 4,
+      borderRadius: "8px",
+    }}
+  >
+    <h2 style={{ textAlign: "center" }}>Forgot Password</h2>
+    <p style={{ textAlign: "center" }}>Enter your email to receive the reset link:</p>
+    <TextField
+      id="forgot-password-email"
+      label="Email"
+      variant="standard"
+      fullWidth
+      value={forgotPasswordEmail}
+      onChange={(e) => setForgotPasswordEmail(e.target.value)}
+      sx={{ mb: 2 }}
+    />
+    <Button
+      variant="contained"
+      onClick={handleForgotPassword}
+      fullWidth
+      className="submit-btn"
+    >
+      Send Reset Link
+    </Button>
+  </Box>
+</Modal>
+
       <ToastContainer
             position="bottom-center"
             autoClose={4000}
