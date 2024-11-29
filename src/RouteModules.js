@@ -1,23 +1,23 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Registration from "./components/registration/Registration";
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Registration from "./components/registration/Registration"
 import Login from "./components/login/Login"
-import Dashboard from "./components/dashboard/Dashboard";
-import NotesContainer from "./components/note/NotesContainer";
-import ArchiveContainer from "./components/note/ArchiveContainer";
-import TrashContainer from "./components/note/TrashContainer";
+import Dashboard from "./components/dashboard/Dashboard"
+import NotesContainer from "./components/note/NotesContainer"
+import ArchiveContainer from "./components/archiveNote/ArchiveNote"
+import TrashContainer from "./components/trashNote/TrashNote"
 
 // routes for login and registeration
 const router = createBrowserRouter([
   {
-    path: "/registration",
-    element: <Registration />,
+    path: "login",
+    element: <Login />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "registration",
+    element: <Registration />,
   },{
-    path: "/dashboard", // Dashboard parent container
+    path: "dashboard", // Dashboard parent container
     element: <Dashboard />,
     children: [
       {

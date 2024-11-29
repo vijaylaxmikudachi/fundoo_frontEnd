@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Registration.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { register } from "../../utils/Api"; // Import the register API function
+import { signupApiCall } from "../../utils/Api";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Registration = () => {
   const [formValues, setFormValues] = useState({
@@ -40,15 +42,54 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      try {
-        await register(formValues);
-        alert("Registration successful!");
-        navigate("/login");
-      } catch (error) {
-        alert("An error occurred. Please try again.");
-      }
+        
+        const { firstName, lastName, email, password } = formValues;
+
+        signupApiCall({firstName,lastName,email,password},`user`)
+        .then((result)=>{
+          const {data}=result
+            if(data.message=== "User registered successfully"){
+              toast.success("User Successfully Created!!", {
+                position: "bottom-center",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+              })
+              setTimeout(() => {
+                navigate("/login")
+            }, 3000);
+            }
+            else{
+              alert("User Not Created !")
+            }
+        })
+        .catch((error)=>{
+          console.log(error)
+          alert("User Not Created due to backend Error!")
+          toast.error("User Not Created!", {
+            position: "bottom-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          })
+         })
+        
+       }
+       
+      
+      
     }
-  };
+
 
   return (
     <div className="container">
@@ -132,6 +173,19 @@ const Registration = () => {
         <img src="images/register.jpg" alt="Account Icon" />
         <p>One account. All of Fundoo working for you.</p>
       </div>
+      <ToastContainer
+            position="bottom-center"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+            theme="colored"
+            transition={Bounce}
+            />
     </div>
   );
 };

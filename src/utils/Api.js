@@ -1,50 +1,71 @@
-import axios from "axios";
+import axios from "axios"
+const BASE_URL=`http://localhost:8000/api/v1/`;
 
-const API = axios.create({
-  baseURL: "http://localhost:8000/api/v1",
-});
+const getAuth =()=>{
+    return `Bearer ${localStorage.getItem('token')}`
+}
 
-//Login
-export const login = async (email, password) => {
-  try {
-    const response = await API.post("/user/login", { email, password });
-    return response.data; // the token 
-  } catch (error) {
-    throw error.response?.data?.message || "Login failed. Please try again.";
-  }
-};
-// Registration
-export const register = async (userData) => {
-    try {
-      const response = await API.post("/user", userData);
-      return response.data; // Return success message or token
-    } catch (error) {
-      throw error.response?.data?.message || "Registration failed. Please try again.";
+export const loginApiCall = async(payload,END_POINT) => {
+    return await axios.post(`${BASE_URL}${END_POINT}`, payload)
+}
+
+export const signupApiCall = async(payload,END_POINT)=>{
+    return await axios.post(`${BASE_URL}${END_POINT}`,payload)
+}
+
+export const getAllNotesApiCall = async(END_POINT)=>{
+    return await axios.get(`${BASE_URL}${END_POINT}`,
+        { headers:{
+            Authorization:getAuth()
+         }
+         }
+    )
+}
+
+export const craeteNoteApiCall = async(payload,END_POINT) => {
+   return await axios.post(`${BASE_URL}${END_POINT}`,payload,{
+    headers:{
+        Authorization:getAuth()
     }
-  };
+   })
+}
 
-// Fetch all notes
-export const getNotes = async () => {
-  try {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.error("No token found in localStorage");
-      throw new Error("Token missing from localStorage");
+export const archiveApiCall = async(END_POINT) => {
+   return await axios.put(`${BASE_URL}${END_POINT}`,{},{
+    headers:{
+        Authorization:getAuth()
     }
+   })
+}
 
-    const response = await API.get("/note/", {
-      headers: {
-        "Authorization": `Bearer ${token}`, // Send token in the Authorization header
-      },
-      
-    });
-    console.log("Token in localStorage:", localStorage.getItem("token"));
+export const trashApiCall = async(END_POINT) => {
+   return await axios.put(`${BASE_URL}${END_POINT}`,{},{
+    headers:{
+        Authorization:getAuth()
+    }
+   })
+}
 
-    console.log("Fetched Notes:", response.data); // Log fetched notes
-    return response.data; // Return fetched notes
-  } catch (error) {
-    console.error("Error fetching notes:", error.response || error.message);
-    throw error.response?.data?.message || error.message || "Error fetching notes";
-  }
-};
+export const deleteApiCall = async(END_POINT) => {
+   return await axios.delete(`${BASE_URL}${END_POINT}`,{
+    headers:{
+        Authorization:getAuth()
+    }
+   })
+}
 
+export const colourApiCall = async(END_POINT,payload) => {
+   return await axios.put(`${BASE_URL}${END_POINT}`,payload,{
+    headers:{
+        Authorization:getAuth()
+    }
+   })
+}
+
+export const updateNotesApiCall = async(END_POINT,payload) => {
+   return await axios.put(`${BASE_URL}${END_POINT}`,payload,{
+    headers:{
+        Authorization:getAuth()
+    }
+   })
+}

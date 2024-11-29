@@ -1,98 +1,40 @@
-.notes-container {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  
-    .note-card {
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin: 10px 0;
-      position: relative;
-      width: 320px;
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      cursor: pointer;
-      outline: none;
-      background-color: #fff;
-      transition: box-shadow 0.4s, border 0.3s, min-height 0.3s;
-  
-      &:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      }
-  
-      &.focused {
-        border: 2px solid #1976d2;
-        min-height: 250px; /* Increase the height of the card when focused */
-      }
-  
-      .note-inputs {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-  
-        .note-title-input,
-        .note-description-input {
-          margin-bottom: 0;
-        }
-  
+.notes-container-cnt {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // 4 equal columns
+  gap: 10px; // Space between the cards
+  width: 100%; // Ensures the container spans the full width
+  justify-items: center; // Centers items horizontally in their grid cells
+}
+
+.notes-addnotes-container-cnt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.notes-main-container-cnt {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        .check-icon-container {
-          margin-top: 8px; /* Add some space before the check icon */
-          display: flex;
-          justify-content: flex-end;
-        }
-      }
-  
-      .note-title {
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-  
-      .note-description {
-        font-size: 14px;
-        color: #555;
-        word-wrap: break-word;
-      }
-  
-      .note-actions {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-  
-        button {
-          margin: 0 5px;
-        }
-  
-        &.show {
-          opacity: 1;
-          visibility: visible;
-        }
-      }
-    }
+@media only screen and (min-width: 250px) and (max-width: 650px) {
+  .notes-container-cnt {
+    grid-template-columns: repeat(2, 1fr); // 2 columns for smaller screens
+    gap: 8px; // Slightly smaller gap for compact view
   }
-  
+}
+
+@media only screen and (min-width: 651px) and (max-width: 1024px) {
+  .notes-container-cnt {
+    grid-template-columns: repeat(3, 1fr); // 3 columns for medium-sized screens
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .notes-container-cnt {
+    grid-template-columns: repeat(4, 1fr); // Default 4 columns for larger screens
+  }
+}
