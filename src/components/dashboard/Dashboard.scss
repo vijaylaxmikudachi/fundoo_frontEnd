@@ -1,0 +1,108 @@
+.dashboard-main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px; 
+    z-index: 1100;
+    background-color: #fff;
+}
+
+
+.db-drawer-main-container .MuiDrawer-paper {
+    width: 250px;
+    z-index: 999;
+    box-shadow: none !important;
+    top: 64px !important; 
+    height: calc(100% - 64px) !important; 
+    position: fixed !important; 
+}
+
+.db-drawer-content {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.db-drawer-left-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.db-drawer-left-icon:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+
+.db-main-container {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 64px; 
+    width: 100%;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease;
+
+    &.drawer-open {
+        margin-left: 250px; 
+    }
+}
+
+
+.db-left-main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0; 
+    position: fixed;
+    top: 64px; 
+    left: 0; 
+    width: 50px;
+    height: calc(100% - 60px); 
+    border-right: 1px solid #ddd;
+    background-color: #fff; 
+    z-index: 1000;
+}
+
+.db-left-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+    transition: background 0.2s;
+}
+
+.db-left-icon:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+
+.MuiDrawer-root .MuiBackdrop-root {
+    background: transparent !important; 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .db-main-container {
+        margin-left: 0; 
+    }
+
+    .db-left-main-container {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        width: 100%; 
+        height: auto; 
+        position: relative; 
+    }
+}
