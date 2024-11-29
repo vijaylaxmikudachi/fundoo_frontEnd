@@ -1,0 +1,40 @@
+.archive-main-container-cnt {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // 4 equal columns
+  gap: 10px; // Space between notes
+  width: 100%; // Full width to align under the side drawer
+  padding: 10px; // Optional: Padding for spacing from the container edges
+  box-sizing: border-box; // Ensures padding doesn’t affect grid layout
+}
+
+.archive-main-container-cnt .notecard-container-cnt {
+  height: auto; // Ensures cards adjust to their content without unnecessary increase
+  min-height: 150px; // Optional: A baseline height for consistency
+  max-height: 150px; // Optional: Prevent extremely tall cards
+  background-color: #fff; // Ensures the card background doesn’t blend with the container
+  border-radius: 5px; // Adds rounded corners for aesthetics
+  overflow: hidden; // Prevent content overflow
+  width: auto;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+@media only screen and (min-width: 250px) and (max-width: 650px) {
+  .archive-main-container-cnt {
+    grid-template-columns: repeat(2, 1fr); // 2 columns for smaller screens
+    gap: 5px; // Reduce gap for compact view
+    justify-content: center; // Center notes on small screens
+  }
+}
+
+@media only screen and (min-width: 651px) and (max-width: 1024px) {
+  .archive-main-container-cnt {
+    grid-template-columns: repeat(3, 1fr); // 3 columns for medium-sized screens
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .archive-main-container-cnt {
+    grid-template-columns: repeat(4, 1fr); // Default 4 columns for larger screens
+  }
+}
