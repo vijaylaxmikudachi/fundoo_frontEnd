@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginApiCall } from "../../utils/Api";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
@@ -12,10 +14,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 const Login = () => {
-  const [email, setEmail] = useState("");//use n
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+    errors: { email: "", password: "" },
+    loading: false,
+  });
   const navigate = useNavigate();
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -26,31 +30,63 @@ const Login = () => {
     let emailError = "";
     let passwordError = "";
 
-    if (!validateEmail(email)) {
+    if (!validateEmail(formState.email)) {
       emailError = "Enter valid email address.";
     }
-    if (!validatePassword(password)) {
+    if (!validatePassword(formState.password)) {
       passwordError = "Enter Valid Password.";
     }
 
     if (emailError || passwordError) {
-      setErrors({ email: emailError, password: passwordError });
+      setFormState({
+        ...formState,
+        errors: { email: emailError, password: passwordError },
+      });
       return;
     }
 
-    setErrors({ email: "", password: "" });
-    setLoading(true);
+    setFormState({ ...formState, errors: { email: "", password: "" }, loading: true });
 
     try {
-      const data = await loginApiCall({email, password},`user/login`);
+      const data = await loginApiCall({ email: formState.email, password: formState.password }, `user/login`);
       console.log(data);
-      localStorage.setItem('token', data.data.data.token);
+      localStorage.setItem("token", data.data.data.token);
+
+      // Show success toast
+      toast.success("Login successful!", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Bounce,
+      });
+      setTimeout(() => {
+        // Navigate to the dashboard
       navigate("/dashboard/notes");
+    }, 2000);
+     
     } catch (error) {
-      alert("Login failed. Please try again.");
+      toast.error("Login failed. Please try again.", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Bounce,
+      });
     } finally {
-      setLoading(false);
+      setFormState((prevState) => ({ ...prevState, loading: false }));
     }
+  };
+
+  const handleChange = (e) => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -65,27 +101,29 @@ const Login = () => {
               <InputLabel htmlFor="email-input">Email*</InputLabel>
               <Input
                 id="email-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={formState.email}
+                onChange={handleChange}
                 startAdornment={
                   <InputAdornment position="start">
                     <AccountCircle />
                   </InputAdornment>
                 }
-                error={!!errors.email}
+                error={!!formState.errors.email}
               />
-              {errors.email && <span className="error-text">{errors.email}</span>}
+              {formState.errors.email && <span className="error-text">{formState.errors.email}</span>}
             </FormControl>
 
             <TextField
               id="password-input"
+              name="password"
               label="Password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formState.password}
+              onChange={handleChange}
               variant="standard"
-              error={!!errors.password}
-              helperText={errors.password}
+              error={!!formState.errors.password}
+              helperText={formState.errors.password}
               fullWidth
             />
 
@@ -101,15 +139,28 @@ const Login = () => {
             <Button
               variant="contained"
               type="submit"
-              disabled={loading}
+              disabled={formState.loading}
               fullWidth
               className="login-btn"
             >
-              {loading ? "Logging in..." : "Login"}
+              {formState.loading ? "Logging in..." : "Login"}
             </Button>
           </Box>
         </form>
       </div>
+      <ToastContainer
+            position="bottom-center"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+            theme="colored"
+            transition={Bounce}
+            />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { Password } from "@mui/icons-material";
 import axios from "axios"
 const BASE_URL=`http://localhost:8000/api/v1/`;
 
@@ -10,6 +11,10 @@ export const loginApiCall = async(payload,END_POINT) => {
 }
 
 export const signupApiCall = async(payload,END_POINT)=>{
+    return await axios.post(`${BASE_URL}${END_POINT}`,payload)
+}
+
+export const forgotPasswordCall = async (payload,END_POINT)=>{
     return await axios.post(`${BASE_URL}${END_POINT}`,payload)
 }
 
