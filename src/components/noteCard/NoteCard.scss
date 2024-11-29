@@ -1,0 +1,202 @@
+.notecard-container-cnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    width: auto;
+    height: auto;
+    min-width: 200px;
+    max-width: 400px;
+    margin: 10px;
+    flex-grow: 0;
+    flex-shrink: 1; 
+    &:hover {
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      transform: scale(1.02);
+    }
+  }
+  
+  .notecard-container-title-cnt {
+    padding: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #202124;
+  }
+  
+  .notecard-container-des-cnt {
+    max-height: 200px;  /* Optional: limit height for descriptions */
+    overflow: auto; 
+    padding: 5px 0;
+    font-size: 16px;
+    color: #5f6368;
+    flex-grow: 1;
+  }
+  
+  .notecard-container-icon-cnt {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s ease-in;
+  }
+  
+  .notecard-container-cnt:hover .notecard-container-icon-cnt {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .dashbd-iconAt-cnt {
+    color: #5f6368;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  
+    &:hover {
+      color: #000;
+    }
+  }
+  
+  .color-palate-cnt {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    gap: 8px;
+    border-radius: 8px;
+  }
+  .color-palate-cnt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .color-box {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  
+  .color-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  
+  .col1 {
+    @extend .color-btn;
+    background-color: #1a1010;
+    border: 1px solid #e7e7bc;
+  }
+  .col2 {
+    @extend .color-btn;
+    background-color: #faa7a8;
+    border: 1px solid #faa7a8;
+  }
+  .col3 {
+    @extend .color-btn;
+    background-color: #f39f76;
+    border: 1px solid #f39f76;
+  }
+  .col4 {
+    @extend .color-btn;
+    background-color: #fff8b8;
+    border: 1px solid #fff8b8;
+  }
+  .col5 {
+    @extend .color-btn;
+    background-color: #e2f6d3;
+    border: 1px solid #e2f6d3;
+  }
+  .col6 {
+    @extend .color-btn;
+    background-color: #b4ddd3;
+    border: 1px solid #b4ddd3;
+  }
+  .col7 {
+    @extend .color-btn;
+    background-color: #d4e4ed;
+    border: 1px solid #d4e4ed;
+  }
+  .col8 {
+    @extend .color-btn;
+    background-color: #aeccdc;
+    border: 1px solid #aeccdc;
+  }
+  .col9 {
+    @extend .color-btn;
+    background-color: #d3bfdb;
+    border: 1px solid #d3bfdb;
+  }
+  .col10 {
+    @extend .color-btn;
+    background-color: #f6e2dd;
+    border: 1px solid #f6e2dd;
+  }
+  .col11 {
+    @extend .color-btn;
+    background-color: #e9e3d4;
+    border: 1px solid #e9e3d4;
+  }
+  .col12 {
+    @extend .color-btn;
+    background-color: #efeff1;
+    border: 1px solid #efeff1;
+  }
+  
+  .horizontal-menu .MuiMenu-list {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .horizontal-menu .MuiMenuItem-root {
+    min-width: auto;
+    padding: 8px 16px;
+  }
+  
+  .notecard-modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .notecard-colour-menu {
+    width: 100%;
+  }
+  
+  @media only screen and (max-width: 650px) {
+    .notecard-colour-menu {
+      width: 80%;
+    }
+    .color-palate-cnt {
+      gap: 6px;
+    }
+  }
+  
