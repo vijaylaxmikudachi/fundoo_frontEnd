@@ -1,8 +1,5 @@
 import './App.css';
 import RouteModules from './routing/RouteModules';
-//import Registration from './components/registration/registration'
-//import Login from './components/login/login';
-
 
 function App() {
   return (
@@ -11,5 +8,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
