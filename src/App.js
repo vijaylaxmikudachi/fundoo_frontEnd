@@ -1,7 +1,8 @@
 import './App.css';
+import RouteModules from './routing/RouteModules';
 //import Registration from './components/registration/registration'
 //import Login from './components/login/login';
-import RouteModules from './RouteModules';
+
 
 function App() {
   return (
