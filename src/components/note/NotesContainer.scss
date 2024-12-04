@@ -1,9 +1,10 @@
-.notes-container-cnt {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); // 4 equal columns
-  gap: 10px; // Space between the cards
-  width: 100%; // Ensures the container spans the full width
-  justify-items: center; // Centers items horizontally in their grid cells
+.notes-main-container-cnt {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-top: 80px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .notes-addnotes-container-cnt {
@@ -13,28 +14,43 @@
   width: 100%;
 }
 
-.notes-main-container-cnt {
-  display: flex;
-  flex-direction: column;
+.notes-container-cnt {
+  display: grid;
+  gap: 20px !important; 
   width: 100%;
+  justify-items: center; 
+
+  
+  grid-template-columns: repeat(4, 1fr); 
 }
 
 
-@media only screen and (min-width: 250px) and (max-width: 650px) {
+@media only screen and (max-width: 480px) {
   .notes-container-cnt {
-    grid-template-columns: repeat(2, 1fr); // 2 columns for smaller screens
-    gap: 8px; // Slightly smaller gap for compact view
+    grid-template-columns: 1fr; 
+    gap: 20px; 
   }
 }
 
-@media only screen and (min-width: 651px) and (max-width: 1024px) {
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
   .notes-container-cnt {
-    grid-template-columns: repeat(3, 1fr); // 3 columns for medium-sized screens
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px; 
   }
 }
 
-@media only screen and (min-width: 1025px) {
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
   .notes-container-cnt {
-    grid-template-columns: repeat(4, 1fr); // Default 4 columns for larger screens
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px;
+  }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1366px) {
+  .notes-container-cnt {
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 15px; 
   }
 }

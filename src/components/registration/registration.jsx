@@ -92,7 +92,7 @@ const Registration = () => {
 
 
   return (
-    <div className="container">
+    <div className ="reg-body">    <div className="reg-container">
       <div className="form-section">
         <div className="register-image-row">
           <img src="images/Fundo-img.png" alt="Logo" className="register-header-logo" />
@@ -187,6 +187,8 @@ const Registration = () => {
             transition={Bounce}
             />
     </div>
+    </div>
+
   );
 };
 

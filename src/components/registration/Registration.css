@@ -1,9 +1,8 @@
-/* General Styles */
 * {
     box-sizing: border-box;
   }
   
-  body {
+  .reg-body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,14 +14,15 @@
     border-radius: 8px;
   }
   
-  .container {
+  .reg-container {
     display: flex;
-    flex-wrap: wrap; /* Enables wrapping for responsive design */
+    flex-wrap: wrap; 
     border-radius: 15px;
     padding: 15px;
-    max-width: 800px; /* Limits the width on larger screens */
+    max-width: 800px; 
     background-color: #fff;
-    width: 90%; /* Ensures it adapts to smaller screen sizes */
+    width: 90%; 
+    box-shadow: black;
   }
   
   .form-section {
@@ -146,7 +146,7 @@
     background-color: #005bb5;
   }
   
-  /* Responsive Styles */
+  
   @media screen and (max-width: 768px) {
     .container {
       flex-direction: column;

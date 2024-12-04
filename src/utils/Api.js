@@ -18,6 +18,16 @@ export const forgotPasswordCall = async (payload,END_POINT)=>{
     return await axios.post(`${BASE_URL}${END_POINT}`,payload)
 }
 
+export const resetPasswordCall = async (token,payload,END_POINT) => {
+    return await axios.post(`${BASE_URL}${END_POINT}`,payload,{
+        headers:{
+            Authorization: `Bearer ${token}`,
+            
+        }
+    })
+}
+
+
 export const getAllNotesApiCall = async(END_POINT)=>{
     return await axios.get(`${BASE_URL}${END_POINT}`,
         { headers:{

@@ -2,8 +2,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200vh;
+    height: 100vh;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 6px rgba(8, 8, 8, 0.952);
+    border-radius: 8px;
   }
   
   .login-box {

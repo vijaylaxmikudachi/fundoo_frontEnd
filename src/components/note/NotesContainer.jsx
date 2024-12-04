@@ -88,7 +88,7 @@ export default function NotesContainer() {
           ))
         ) : (
           <div className="no-notes-message"><img src={`${process.env.PUBLIC_URL}/images/NoNotes.png`} alt="Logo" style={{ height: "140px", width: "auto" }}/>
-        <p>No notes available.</p></div>
+          <p>No notes available.</p></div>
         )}
       </div>
     </div>

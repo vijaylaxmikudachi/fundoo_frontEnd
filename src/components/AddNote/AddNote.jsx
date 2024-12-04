@@ -16,7 +16,7 @@ export default function AddNotes(props) {
   const { container, handleModal, updateList, noteDetails } = props;
 
   const [color, setColour] = useState(noteDetails ? noteDetails.color : '#ffffff');
-  const [conditional, setConditional] = useState(false);  
+  const [conditional, setConditional] = useState(container === 'notecard' ? true : false);  
   const [anchorEl, setAnchorEl] = useState(null);  
   const open = Boolean(anchorEl);  
   const [title, setTitle] = useState(noteDetails ? noteDetails.title : '');

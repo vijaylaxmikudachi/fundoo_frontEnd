@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import NoteCard from '../noteCard/NoteCard'
 import { getAllNotesApiCall } from '../../utils/Api'
-import './TrashNote.scss'
-
 function TrashContainer() {
     const [notesList, setNotesList] = useState([]);
-
+    const [error, setError] = useState(null);
     useEffect(() => {
         getAllNotesApiCall(`note`)
         .then((result)=>{
@@ -14,8 +12,9 @@ function TrashContainer() {
             setNotesList(trashedNotes);
             console.log('trashed:',trashedNotes);
         })
-        .catch((error)=>{
-          console.log(error)
+        .catch((error) => {
+          console.error('Error fetching notes:', error);
+          setError('Failed to load notes.');
         })
     }, [])
 
@@ -26,20 +25,30 @@ function TrashContainer() {
     };
     
       return (
-        <div className="trash-main-container-cnt">
-          {notesList.length > 0 ? (
-            notesList.map((item) => (
-              <NoteCard
-                key={item._id} 
-                noteDetails={item}
-                container="trash"
-                updateList={handleUpdateList}
-              />
-            ))
-          ) : (
-            <div className="empty-trash-message">Trash is empty. No notes here!</div>
-          )}
-        </div>
+       
+      <div className="notes-main-container-cnt">
+      <div className="notes-addnotes-container-cnt">
+        <h2>Trash Container</h2>
+      </div>
+
+      <div className="notes-container-cnt">
+        {error ? (
+          <div className="error-message">{error}</div>
+        ) : notesList.length > 0 ? (
+          notesList.map((item) => (
+            <NoteCard
+            key={item._id} 
+            noteDetails={item}
+            container="trash"
+            updateList={handleUpdateList}
+            />
+          ))
+        ) : (
+          <div className="no-notes-message"><img src={`${process.env.PUBLIC_URL}/images/NoNotes.png`} alt="Logo" style={{ height: "140px", width: "auto" }}/>
+        <p>No notes available.</p></div>
+        )}
+      </div>
+    </div>
       );
     }
 
