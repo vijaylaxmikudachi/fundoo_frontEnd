@@ -4,30 +4,40 @@ import AddNotes from '../addNote/AddNote';
 import NoteCard from '../noteCard/NoteCard';
 import { getAllNotesApiCall } from '../../utils/Api';
 import './NotesContainer.scss';
+import { useContext } from 'react';
+import { SearchQueryContext } from '../hooks/SearchHook';
 
 export default function NotesContainer() {
   const [notesList, setNotesList] = useState([]);
   const [error, setError] = useState(null);
-  const [loading,setLoading] = useState(false)
+  const [loading,setLoading] = useState(false);
+  const query = useContext(SearchQueryContext);
+  console.log("Query in NotesContainer:", query);
+  
   useEffect(() => {
-    setLoading(true)
-    getAllNotesApiCall('note')
+    setLoading(true);
+    getAllNotesApiCall("note")
       .then((result) => {
         const { data } = result;
-      
-        const filteredNotes = data.data.filter(
-          (note) => !note.isArchive && !note.isTrash
-        );
-        setNotesList(filteredNotes);
+        setNotesList(data.data); 
       })
       .catch((error) => {
-        console.error('Error fetching notes:', error);
-        setError('Failed to load notes.');
+        console.error("Error fetching notes:", error);
+        setError("Failed to load notes.");
       })
-      .finally(()=>setLoading(false))
+      .finally(() => setLoading(false));
   }, []);
   
-
+  const filteredNotes = notesList.filter((note) => {
+    if (!query) {
+      return !note.isArchive && !note.isTrash;
+    }
+    const searchText = query.toLowerCase();
+    return (
+      (note.title && note.title.toLowerCase().includes(searchText)) ||
+      (note.description && note.description.toLowerCase().includes(searchText))
+    );
+  })
   const handleUpdateList = (updatedNote, action) => {
     setNotesList((prevNotesList) => {
       let updatedNotes = [...prevNotesList];
@@ -72,19 +82,20 @@ export default function NotesContainer() {
   
   return (
     <div className="notes-main-container-cnt">
-      <div className="notes-addnotes-container-cnt">
-        <AddNotes updateList={handleUpdateList} />
-      </div>
-
+      {!query && (
+        <div className="notes-addnotes-container-cnt">
+          <AddNotes updateList={handleUpdateList} />
+        </div>
+      )}
       <div className="notes-container-cnt">
         {loading ? (
           <div className="loading-container">
-            <CircularProgress /> {/* Material UI Loader */}
+            <CircularProgress /> 
           </div>
         ) : error ? (
           <div className="error-message">{error}</div>
-        ) : notesList.length > 0 ? (
-          notesList.map((item) => (
+        ) : filteredNotes.length > 0 ? (
+          filteredNotes.map((item) => (
             <NoteCard
               key={item._id}
               noteDetails={item}

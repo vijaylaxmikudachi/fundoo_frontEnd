@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import NoteCard from '../noteCard/NoteCard';
 import { getAllNotesApiCall } from '../../utils/Api';
-import './ArchiveNote.scss';
 
 export default function ArchiveContainer() {
   const [notesList, setNotesList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     fetchArchivedNotes();
@@ -23,6 +23,7 @@ export default function ArchiveContainer() {
       })
       .catch((error) => {
         console.error('Error fetching archived notes:', error);
+        setError(error)
       })
       .finally(() => setLoading(false));
   };
@@ -54,23 +55,29 @@ export default function ArchiveContainer() {
   };
 
   return (
-    <div className="archive-main-container-cnt">
-      {loading ? (
-        <div className="archive-loader-container">
-          <CircularProgress />
-        </div>
+       
+    <div className="notes-main-container-cnt">
+    <div className="notes-addnotes-container-cnt">
+      <h2>Archive Container</h2>
+    </div>
+
+    <div className="notes-container-cnt">
+      {error ? (
+        <div className="error-message">{error}</div>
       ) : notesList.length > 0 ? (
         notesList.map((item) => (
           <NoteCard
-            key={item._id}
-            noteDetails={item}
-            container="archive"
-            updateList={handleUpdateList}
+          key={item._id} 
+          noteDetails={item}
+          container="archive"
+          updateList={handleUpdateList}
           />
         ))
       ) : (
-        <div className="no-archive-message">No archived notes available.</div>
+        <div className="no-notes-message"><img src={`${process.env.PUBLIC_URL}/images/NoNotes.png`} alt="Logo" style={{ height: "140px", width: "auto" }}/>
+      <p>No notes available.</p></div>
       )}
     </div>
-  );
+  </div>
+    );
 }
