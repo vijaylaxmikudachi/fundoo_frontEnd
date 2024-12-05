@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import AddNotes from '../addNote/AddNote';
 import NoteCard from '../noteCard/NoteCard';
 import { getAllNotesApiCall } from '../../utils/Api';
@@ -7,9 +8,9 @@ import './NotesContainer.scss';
 export default function NotesContainer() {
   const [notesList, setNotesList] = useState([]);
   const [error, setError] = useState(null);
-
+  const [loading,setLoading] = useState(false)
   useEffect(() => {
-  
+    setLoading(true)
     getAllNotesApiCall('note')
       .then((result) => {
         const { data } = result;
@@ -22,7 +23,8 @@ export default function NotesContainer() {
       .catch((error) => {
         console.error('Error fetching notes:', error);
         setError('Failed to load notes.');
-      });
+      })
+      .finally(()=>setLoading(false))
   }, []);
   
 
@@ -32,7 +34,7 @@ export default function NotesContainer() {
   
       switch (action) {
         case 'add':
-                updatedNotes = [...notesList,updatedNote]
+                updatedNotes = [updatedNote,...notesList]
                 break;
         case 'archive':
         case 'trash':
@@ -75,7 +77,11 @@ export default function NotesContainer() {
       </div>
 
       <div className="notes-container-cnt">
-        {error ? (
+        {loading ? (
+          <div className="loading-container">
+            <CircularProgress /> {/* Material UI Loader */}
+          </div>
+        ) : error ? (
           <div className="error-message">{error}</div>
         ) : notesList.length > 0 ? (
           notesList.map((item) => (
@@ -87,8 +93,14 @@ export default function NotesContainer() {
             />
           ))
         ) : (
-          <div className="no-notes-message"><img src={`${process.env.PUBLIC_URL}/images/NoNotes.png`} alt="Logo" style={{ height: "140px", width: "auto" }}/>
-          <p>No notes available.</p></div>
+          <div className="no-notes-message">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/NoNotes.png`}
+              alt="Logo"
+              style={{ height: '140px', width: 'auto' }}
+            />
+            <p>No notes available.</p>
+          </div>
         )}
       </div>
     </div>

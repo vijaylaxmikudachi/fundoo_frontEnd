@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import NoteCard from '../noteCard/NoteCard';
 import { getAllNotesApiCall } from '../../utils/Api';
 import './ArchiveNote.scss';
 
 export default function ArchiveContainer() {
   const [notesList, setNotesList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchArchivedNotes();
   }, []);
 
-  // Function to fetch archived notes
   const fetchArchivedNotes = () => {
+    setLoading(true);
     getAllNotesApiCall('note')
       .then((result) => {
         const { data } = result;
@@ -21,10 +23,11 @@ export default function ArchiveContainer() {
       })
       .catch((error) => {
         console.error('Error fetching archived notes:', error);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
-  // Update the list based on the action
+
   const handleUpdateList = (updatedNote, action) => {
     setNotesList((prevNotesList) => {
       let updatedList;
@@ -32,12 +35,10 @@ export default function ArchiveContainer() {
       switch (action) {
         case 'unarchive':
         case 'trash':
-          // Remove the note from the archive list
           updatedList = prevNotesList.filter((note) => note._id !== updatedNote._id);
           break;
         case 'colour':
         case 'update':
-          // Update the note in the archive list
           updatedList = prevNotesList.map((note) =>
             note._id === updatedNote._id ? { ...note, ...updatedNote } : note
           );
@@ -54,7 +55,11 @@ export default function ArchiveContainer() {
 
   return (
     <div className="archive-main-container-cnt">
-      {notesList.length > 0 ? (
+      {loading ? (
+        <div className="archive-loader-container">
+          <CircularProgress />
+        </div>
+      ) : notesList.length > 0 ? (
         notesList.map((item) => (
           <NoteCard
             key={item._id}

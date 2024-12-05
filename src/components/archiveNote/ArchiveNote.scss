@@ -1,40 +1,17 @@
-// .archive-main-container-cnt {
-//   display: grid;
-//   grid-template-columns: repeat(4, 1fr); // 4 equal columns
-//   gap: 10px; // Space between notes
-//   width: 100%; // Full width to align under the side drawer
-//   padding: 10px; // Optional: Padding for spacing from the container edges
-//   box-sizing: border-box; // Ensures padding doesn’t affect grid layout
-// }
-
-// .archive-main-container-cnt .notecard-container-cnt {
-//   height: auto; /* Adjusts the card height to content */
-//   min-height: 130px; /* Optional: A baseline height for consistency */
-//   max-height: 130px; /* Optional: Prevents cards from becoming too tall */
-//   background-color: #fff; /* Background color */
-//   border-radius: 5px; /* Rounded corners */
-//   overflow: hidden; /* Prevent content from overflowing */
-//   width: auto;
-//   min-width: 200px; /* Ensures cards are not too small */
-//   max-width: 400px; /* Prevents cards from becoming too large */
-// }
-
-// @media only screen and (min-width: 250px) and (max-width: 650px) {
-//   .archive-main-container-cnt {
-//     grid-template-columns: repeat(2, 1fr); // 2 columns for smaller screens
-//     gap: 5px; // Reduce gap for compact view
-//     justify-content: center; // Center notes on small screens
-//   }
-// }
-
-// @media only screen and (min-width: 651px) and (max-width: 1024px) {
-//   .archive-main-container-cnt {
-//     grid-template-columns: repeat(3, 1fr); // 3 columns for medium-sized screens
-//   }
-// }
-
-// @media only screen and (min-width: 1025px) {
-//   .archive-main-container-cnt {
-//     grid-template-columns: repeat(4, 1fr); // Default 4 columns for larger screens
-//   }
-// }
+.archive-loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; 
+    width: 100%;
+    position: absolute; 
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.6); 
+    z-index: 10; 
+  }
+  
+  .archive-main-container-cnt {
+    position: relative;
+  }
+  
