@@ -1,29 +1,42 @@
 import React, { useState } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, Modal, TextField, IconButton } from "@mui/material";
-import { Lightbulb, Archive, Edit as EditIcon, Delete, Label, Check } from "@mui/icons-material";
+import "./SideNavBar.scss";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Modal,
+  TextField,
+  IconButton,
+} from "@mui/material";
+import {
+  LightbulbOutlined,
+  ArchiveOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  LabelOutlined,
+  CheckOutlined,
+  CloseOutlined,
+} from "@mui/icons-material";
 import { useLocation, Link } from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
 
 const SideNavBar = () => {
   const location = useLocation();
-  const [labels, setLabels] = useState([]); 
-  const [isModalOpen, setModalOpen] = useState(false); 
-  const [newLabel, setNewLabel] = useState(""); 
-  const [editingLabelIndex, setEditingLabelIndex] = useState(null); 
+  const [labels, setLabels] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [newLabel, setNewLabel] = useState("");
+  const [editingLabelIndex, setEditingLabelIndex] = useState(null);
 
-  
   const handleModalOpen = () => {
     setModalOpen(true);
   };
 
-  
   const handleModalClose = () => {
     setModalOpen(false);
     setNewLabel("");
-    setEditingLabelIndex(null); 
+    setEditingLabelIndex(null);
   };
 
-  
   const handleAddOrUpdateLabel = () => {
     if (newLabel.trim()) {
       if (editingLabelIndex !== null) {
@@ -38,43 +51,35 @@ const SideNavBar = () => {
     }
   };
 
-  
   const handleEditLabel = (index) => {
     setNewLabel(labels[index]);
     setEditingLabelIndex(index);
   };
 
-  
   const handleDeleteLabel = (index) => {
     setLabels((prev) => prev.filter((_, i) => i !== index));
   };
 
   const navList = [
-    { id: 1, name: "Notes", icon: <Lightbulb />, route: "/dashboard/notes" },
-    { id: 2, name: "Archives", icon: <Archive />, route: "/dashboard/archive" },
-    { id: 3, name: "Bin", icon: <Delete />, route: "/dashboard/trash" },
+    { id: 1, name: "Notes", icon: <LightbulbOutlined />, route: "/dashboard/notes" },
+    { id: 2, name: "Archives", icon: <ArchiveOutlined />, route: "/dashboard/archive" },
+    { id: 3, name: "Bin", icon: <DeleteOutlined />, route: "/dashboard/trash" },
   ];
 
-  
   const updatedNavList = [
     ...navList,
-    { id: "edit-labels", name: "Edit labels", icon: <EditIcon />, route: "#", onClick: handleModalOpen }, 
+    { id: "edit-labels", name: "Edit labels", icon: <EditOutlined />, route: "#", onClick: handleModalOpen },
     ...labels.map((label, index) => ({
       id: `label-${index}`,
       name: label,
-      icon: <Label />,
-      route: `#`, 
+      icon: <LabelOutlined />,
+      route: `#`,
     })),
   ];
 
   return (
     <div>
-      <List
-        sx={{
-          cursor: "pointer",
-        }}
-      >
-        
+      <List className="sidenav-list">
         {updatedNavList.map((list) => {
           const isActive = location.pathname === list.route;
 
@@ -82,26 +87,11 @@ const SideNavBar = () => {
             <ListItem
               button
               key={list.id}
-              sx={{
-                backgroundColor: isActive ? "rgb(254, 239, 195)" : "inherit",
-                borderRadius: "6px",
-                "&:hover": {
-                  backgroundColor: "#f1f3f4",
-                  transition: "background-color 0.3s",
-                },
-              }}
+              className={`sidenav-list-item ${isActive ? "active" : ""}`}
               onClick={list.onClick}
             >
-              <Link
-                to={list.route}
-                style={{
-                  textDecoration: "none",
-                  display: "flex",
-                  color: "inherit",
-                  width: "100%",
-                }}
-              >
-                <ListItemIcon style={{ alignItems: "center" }}>{list.icon}</ListItemIcon>
+              <Link to={list.route} className="sidenav-link">
+                <ListItemIcon className="sidenav-icon">{list.icon}</ListItemIcon>
                 <ListItemText primary={list.name} />
               </Link>
             </ListItem>
@@ -109,33 +99,15 @@ const SideNavBar = () => {
         })}
       </List>
 
-      
-      <Modal
-        open={isModalOpen}
-        onClose={handleModalClose}
-        aria-labelledby="edit-labels-modal"
-        aria-describedby="edit-labels-modal-description"
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "400px",
-            backgroundColor: "white",
-            borderRadius: "8px",
-            boxShadow: 24,
-            padding: "16px",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <Modal open={isModalOpen} onClose={handleModalClose} className="sidenav-modal">
+        <div className="modal-content">
+          <div className="modal-header">
             <h3>Edit Labels</h3>
             <IconButton onClick={handleModalClose}>
-              <CloseIcon />
+              <CloseOutlined />
             </IconButton>
           </div>
-          <div style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}>
+          <div className="modal-body">
             <TextField
               fullWidth
               variant="outlined"
@@ -144,39 +116,23 @@ const SideNavBar = () => {
               onChange={(e) => setNewLabel(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleAddOrUpdateLabel()}
             />
-            <IconButton
-              size="large"
-              color="primary"
-              onClick={handleAddOrUpdateLabel}
-              style={{ marginLeft: "8px" }}
-            >
-              <Check />
+            <IconButton size="large" color="primary" onClick={handleAddOrUpdateLabel}>
+              <CheckOutlined />
             </IconButton>
           </div>
-          <div>
+          <div className="modal-label-list">
             {labels.map((label, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "8px",
-                  padding: "8px",
-                  backgroundColor: "#f1f3f4",
-                  borderRadius: "6px",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Label style={{ marginRight: "8px" }} />
+              <div key={index} className="label-item">
+                <div className="label-text">
+                  <LabelOutlined />
                   <span>{label}</span>
                 </div>
-                <div>
+                <div className="label-actions">
                   <IconButton size="small" onClick={() => handleEditLabel(index)}>
-                    <EditIcon />
+                    <EditOutlined />
                   </IconButton>
                   <IconButton size="small" onClick={() => handleDeleteLabel(index)}>
-                    <Delete />
+                    <DeleteOutlined />
                   </IconButton>
                 </div>
               </div>
