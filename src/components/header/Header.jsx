@@ -51,6 +51,7 @@ const HeaderBar = ({ open, handleDrawer }) => {
     localStorage.removeItem("token"); 
     navigate("/login");
   };
+  const logo = 'https://seeklogo.com/images/G/google-keep-logo-0BC92EBBBD-seeklogo.com.png';
   
   return (
     <Header open={open}>
@@ -64,11 +65,7 @@ const HeaderBar = ({ open, handleDrawer }) => {
         >
                 <MenuIcon />
               </IconButton>
-              <img
-                src={`${process.env.PUBLIC_URL}/images/Fundo-img.png`}
-                alt="Logo"
-                style={{ height: "40px", width: "auto" }}
-              />
+              <img src={logo} alt="logo" style={{width: 30}} />
               <Typography variant="h6" color="#5f6368" sx={{ fontWeight: "bold" }}>
                 Fundoo-Notes
               </Typography>
@@ -114,7 +111,7 @@ const HeaderBar = ({ open, handleDrawer }) => {
               </IconButton>
               <Avatar
             alt="User Profile"
-            src={`${process.env.PUBLIC_URL}/images/pavan.jpeg`}
+            src={`${process.env.PUBLIC_URL}/images/`}
             sx={{ width: 32, height: 32, cursor: "pointer" }}
             onClick={handleMenuOpen}
           />
