@@ -85,9 +85,6 @@ const Registration = () => {
          })
         
        }
-       
-      
-      
     }
 
 
@@ -137,28 +134,32 @@ const Registration = () => {
           </div>
           <div className="password-row">
             <div className="form-group">
-              <TextField
-                label="Password"
-                type="password"
-                name="password"
-                value={formValues.password}
-                onChange={handleChange}
-                fullWidth
-                error={!!errors.password}
-                helperText={errors.password}
-              />
-            </div>
-            <div className="form-group">
-              <TextField
-                label="Confirm Password"
-                type="password"
-                name="confirmPassword"
-                value={formValues.confirmPassword}
-                onChange={handleChange}
-                fullWidth
-                error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword}
-              />
+            <TextField
+              label="Password"
+              type="password"
+              name="password"
+              value={formValues.password}
+              onChange={handleChange}
+              fullWidth
+              error={!!errors.password}
+              helperText={errors.password}
+              id="password" 
+              inputProps={{ "data-testid": "password-input" }}
+            />
+
+            <TextField
+              label="Confirm Password"
+              type="password"
+              name="confirmPassword"
+              value={formValues.confirmPassword}
+              onChange={handleChange}
+              fullWidth
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword}
+              id="confirmPassword" 
+              inputProps={{ "data-testid": "confirm-password-input" }} 
+            />
+
             </div>
           </div>
           <div className="action-row">

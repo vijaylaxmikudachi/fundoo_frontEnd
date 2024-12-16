@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginApiCall ,forgotPasswordCall } from "../../utils/Api";
+import { loginApiCall ,forgotPasswordCall , resetPasswordCall} from "../../utils/Api";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
@@ -24,6 +24,11 @@ const Login = () => {
   
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [resetToken, setResetToken] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+
   const navigate = useNavigate();
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePassword = (password) => password.length >= 8;
@@ -65,6 +70,48 @@ const Login = () => {
       });
     }
   };
+  const handleResetPassword = async () => {
+    if (!resetToken || !validatePassword(newPassword)) {
+      toast.error("Please provide a valid token and password.", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Bounce,
+      });
+      return;
+    }
+  
+    try {
+      await resetPasswordCall(resetToken, { newPassword }, "user/reset-password");
+      toast.success("Password reset successfully!", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        transition: Bounce,
+      });
+      setIsResetModalOpen(false);
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Failed to reset password. Please try again.",
+        {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          transition: Bounce,
+        }
+      );
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     let emailError = "";
@@ -189,8 +236,7 @@ const Login = () => {
           </Box>
         </form>
       </div>
-      {/* Modal for Forgot Password */}
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+<Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
   <Box
     sx={{
       position: "absolute",
@@ -226,7 +272,52 @@ const Login = () => {
     </Button>
   </Box>
 </Modal>
-
+<Modal open={isResetModalOpen} onClose={() => setIsResetModalOpen(false)}>
+  <Box
+    sx={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 400,
+      bgcolor: "background.paper",
+      border: "2px solid #000",
+      boxShadow: 24,
+      p: 4,
+      borderRadius: "8px",
+    }}
+  >
+    <h2 style={{ textAlign: "center" }}>Reset Password</h2>
+    <p style={{ textAlign: "center" }}>Enter the reset token and your new password:</p>
+    <TextField
+      id="reset-token"
+      label="Reset Token"
+      variant="standard"
+      fullWidth
+      value={resetToken}
+      onChange={(e) => setResetToken(e.target.value)}
+      sx={{ mb: 2 }}
+    />
+    <TextField
+      id="new-password"
+      label="New Password"
+      type="password"
+      variant="standard"
+      fullWidth
+      value={newPassword}
+      onChange={(e) => setNewPassword(e.target.value)}
+      sx={{ mb: 2 }}
+    />
+    <Button
+      variant="contained"
+      onClick={handleResetPassword}
+      fullWidth
+      className="submit-btn"
+    >
+      Reset Password
+    </Button>
+  </Box>
+</Modal>
       <ToastContainer
             position="bottom-center"
             autoClose={4000}

@@ -18,9 +18,17 @@ function TrashContainer() {
         })
     }, [])
 
-    const handleUpdateList = (data, action) => {
-      if (action === "untrash" || action === "delete") {
-        setNotesList((prevNotesList) => prevNotesList.filter((note) => note._id !== data._id));
+    
+    const handleUpdateList = (updatedNote, action) => {
+      if (action === "delete") {
+         setNotesList((prevNotesList) =>
+          prevNotesList.filter((note) => note._id !== updatedNote._id)
+        );
+      }
+      if (action === "restore") {
+        setNotesList((prevNotesList) =>
+          prevNotesList.filter((note) => note._id !== updatedNote._id)
+        );
       }
     };
     

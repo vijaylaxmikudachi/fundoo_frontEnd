@@ -13,7 +13,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
-import { UpdateQueryContext } from '../hooks/SearchHook';
+import { UpdateQueryContext } from '../../hook/SearchContext';
 
 
 const Header = styled(AppBar)`
@@ -123,7 +123,6 @@ const HeaderBar = ({ open, handleDrawer }) => {
             transformOrigin={{ vertical: "top", horizontal: "right" }}
           >
             <MenuItem >View Profile</MenuItem>
-            <MenuItem >Dark Theam</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
             </Box>

@@ -61,10 +61,13 @@ function NoteCard(props) {
   
       if (response && response.data) {
         const updatedNote = response.data.data;
+        updateList(updatedNote, action);
         if(action === 'colour'){
           noteDetails.color = selectedColour;
         }
         updateList(updatedNote, action); 
+        console.log("Updating list after restore:", updatedNote, action);
+
       }
     } catch (error) {
       console.error(`Error performing ${action} action:`, error);

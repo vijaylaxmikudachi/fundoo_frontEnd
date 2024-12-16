@@ -1,15 +1,13 @@
 import './App.css';
-import SearchHook from './components/hooks/SearchHook';
+import { SearchProvider } from './hook/SearchContext'; 
 import RouteModules from './routing/RouteModules';
 
 function App() {
   return (
-    <div className="App">
-        <SearchHook>
-       <RouteModules />
-       </SearchHook>
-   
-    </div>
+    <SearchProvider>
+      <RouteModules />
+    </SearchProvider>
   );
 }
+
 export default App;

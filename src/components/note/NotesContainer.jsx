@@ -5,7 +5,7 @@ import NoteCard from '../noteCard/NoteCard';
 import { getAllNotesApiCall } from '../../utils/Api';
 import './NotesContainer.scss';
 import { useContext } from 'react';
-import { SearchQueryContext } from '../hooks/SearchHook';
+import { SearchQueryContext } from '../../hook/SearchContext';
 
 export default function NotesContainer() {
   const [notesList, setNotesList] = useState([]);
